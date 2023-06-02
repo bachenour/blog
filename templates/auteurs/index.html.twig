@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1> Liste des auteurs </h1>
+    {% if auteurs is not empty %}
+            {% for auteur in auteurs %}
+                <h2><a href="{{ path('auteur', {'id': auteur.id}) }}">{{ auteur.nom }} ({{ auteur.email }})</a></h2>
+                {% if auteur.articles is not empty %}
+                    {% for article in auteur.articles %}
+                        <li>{{article.titre}}</li>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <li>Pas d'utilisateur</li>
+        {% endif %}
+{% endblock %}

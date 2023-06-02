@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h2><a href="{{ path('auteur', {'id': auteur.id}) }}">{{ auteur.nom }} ({{ auteur.email }})</a></h2>
+        <button><a href="{{ path('auteur_edit', {'id': auteur.id}) }}">Modifier</a></button>
+        <h3>Articles écrits par cet auteur: </h3>
+        {% for article in auteur.articles %}
+            <li>{{article.titre}}</li>
+        {% endfor %}
+{% endblock %}
