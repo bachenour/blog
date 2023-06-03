@@ -1,9 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+    <button><a href="{{ path('articles')}}">Voir tous les articles </a></button>
+    <button><a href="{{ path('auteurs') }}">Voir tous les auteurs</a></button>
+    
+
     <h2><a href="{{ path('auteur', {'id': auteur.id}) }}">{{ auteur.nom }} ({{ auteur.email }})</a></h2>
-        <button><a href="{{ path('auteur_edit', {'id': auteur.id}) }}">Modifier</a></button>
+        <button><a href="{{ path('auteur_edit', {'id': auteur.id}) }}">Modifier l'auteur</a></button>
         <h3>Articles écrits par cet auteur: </h3>
         {% for article in auteur.articles %}
-            <li>{{article.titre}}</li>
+            <li><a href="{{ path('article', {'id': article.id}) }}">{{ article.titre }}</a></li>
         {% endfor %}
 {% endblock %}
