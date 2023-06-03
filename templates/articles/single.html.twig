@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <button><a href="{{ path('articles')}}">Voir tous les articles </a></button>
+    <div class="container">
+        <p>--------------------------------------------------------------------------------------------------------------------</p>
+            <h2><li>{{ article.titre }}</li></h2>
+        <p>-------------------------------------------------------</p>
+            <h3>Résumé : </h3>
+            <div><p>{{ article.resume }}</p></div>
+        <p>-------------------------------------------------------</p>
+
+            <h3>Contenu de l'article : </h3>
+            <div><p>{{ article.contenu }}</p></div>
+        <p>-------------------------------------------------------</p>
+
+            <p>publié le : {{ article.datePublication }}</p>
+            <p>créé le : {{ article.dateCreation }}</p>
+            <p>modifié le : {{ article.dateModification }}</p>
+            <p>auteur : {{ article.auteur.nom }}</p>
+            <button><a href="{{ path('article_edit', {'id': article.id}) }}">Modifier</a></button>
+
+        <p>--------------------------------------------------------------------------------------------------------------------</p>
+    </div>
+{% endblock %}

@@ -47,6 +47,8 @@ class AuteursController extends AbstractController
         ]);
     } 
     
+
+    //page d'accueil
     #[Route('/auteurs', name: 'auteurs')]
     public function getAuteurs()
     {

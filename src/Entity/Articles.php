@@ -92,9 +92,9 @@ class Articles
         return $this;
     }
 
-    public function getDatePublication(): ?\DateTimeInterface
+    public function getDatePublication(): ?string
     {
-        return $this->date_publication;
+        return $this->date_publication->format('d/m/Y');
     }
 
     public function setDatePublication(\DateTimeInterface $date_publication): self
@@ -104,9 +104,9 @@ class Articles
         return $this;
     }
 
-    public function getDateCreation(): ?\DateTimeInterface
+    public function getDateCreation(): ?string
     {
-        return $this->date_creation;
+        return $this->date_creation->format('d/m/Y');
     }
 
     public function setDateCreation(\DateTimeInterface $date_creation): self
@@ -116,9 +116,9 @@ class Articles
         return $this;
     }
 
-    public function getDateModification(): ?\DateTimeInterface
+    public function getDateModification(): ?string
     {
-        return $this->date_modification;
+        return $this->date_modification->format('d/m/Y');
     }
 
     public function setDateModification(?\DateTimeInterface $date_modification): self

@@ -4,11 +4,18 @@
     {% if articles is not empty %}
         {% for article in articles %}
             <div class="container">
-                <h2>{{ article.titre }}</h2>
-                <h3>Résumé</h3>
-                <p>{{ article.resume }}</p>
-            </div>
+            <p>--------------------------------------------------------------------------------------------------------------------</p>
+                <h2><li>{{ article.titre }}</li></h2>
+                <h3>Résumé : </h3>
+                <div><p>{{ article.resume }}</p></div>
+                <p>publié le : {{ article.datePublication }}</p>
+                <p>créé le : {{ article.dateCreation }}</p>
+                <p>modifié le : {{ article.dateModification }}</p>
+                <p>auteur : {{ article.auteur.nom }}</p>
+                <button><a href="{{ path('article', {'id': article.id}) }}">Voir</a></button>
 
+            <p>--------------------------------------------------------------------------------------------------------------------</p>
+            </div>
         {% endfor %}
     {% else %}
         <li>Aucun article trouvé</li>

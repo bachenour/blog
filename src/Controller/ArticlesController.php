@@ -65,5 +65,32 @@ class ArticlesController extends AbstractController
             'articles' => $articles,
         ]);
     }
+
+    #[Route('/article/{id}', name: 'article')]
+    public function getArticle(Request $request): Response
+    {
+        $article = $this->doctrine->getRepository(Articles::class)->find($request->attributes->get('id'));
+        
+        return $this->render('articles/single.html.twig', [
+            'article' => $article,
+        ]);
+    }
+
+    #[Route('/article/edit/{id}', name: 'article_edit')]
+    public function editArticle($id, Request $request)
+    {
+        $entityManager = $this->doctrine->getManager();
+        $article = $entityManager->getRepository(Articles::class)->find($id);
+        $form = $this->createForm(ArticlesType::class, $article);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $article = $form->getData();
+            $entityManager->flush();
+            return $this->redirectToRoute('article' , ['id' => $id]);
+        }
+        return $this->render('articles/add.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
     
 }
