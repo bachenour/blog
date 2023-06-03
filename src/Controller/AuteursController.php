@@ -12,7 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
-
+use App\Repository\AuteursRepository;
+use Doctrine\ORM\Mapping\OrderBy;
 
 class AuteursController extends AbstractController
 {
@@ -51,7 +52,7 @@ class AuteursController extends AbstractController
     {
         $auteurs = $this->doctrine->getRepository(Auteurs::class)->findAll();
         return $this->render('auteurs/index.html.twig', [
-            'auteurs' => $auteurs,
+            'auteurs' => $auteurs
         ]);
     }
 
@@ -59,6 +60,7 @@ class AuteursController extends AbstractController
     public function getAuteur(Request $request): Response
     {
         $auteur = $this->doctrine->getRepository(Auteurs::class)->find($request->attributes->get('id'));
+        
         return $this->render('auteurs/single.html.twig', [
             'auteur' => $auteur,
         ]);
@@ -78,6 +80,15 @@ class AuteursController extends AbstractController
         }
         return $this->render('auteurs/add.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/auteur/{id}/articles', name: 'auteur_articles')]
+    public function getAuteurArticles(Request $request): Response
+    {
+        $auteur = $this->doctrine->getRepository(Auteurs::class)->find($request->attributes->get('id'));
+        return $this->render('auteurs/articles.html.twig', [
+            'auteur' => $auteur
         ]);
     }
 

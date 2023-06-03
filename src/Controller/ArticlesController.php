@@ -5,10 +5,19 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Articles;
+use App\Form\ArticlesType;
 
 class ArticlesController extends AbstractController
 {
-    #[Route('/articles', name: 'app_articles')]
+
+    public function __construct(private readonly ManagerRegistry $doctrine){}
+    
+    #[Route('/articles/test', name: 'app_articles')]
     public function index(): JsonResponse
     {
         return $this->json([
@@ -17,31 +26,43 @@ class ArticlesController extends AbstractController
         ]);
     }
     
-    public function addArticle()
+    #[Route('/articles/new', name: 'articles_add')]
+    public function addArticle(Request $request, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('articles/addArticle.html.twig');
-    }
-    
-    #[Route('/article/{id}', name: 'article')]
-    public function getArticle($id)
-    {
-        return $this->render('articles/showArticle.html.twig', [
-            'id' => $id,
+        $article = new Articles();
+        $form = $this->createForm(
+            ArticlesType::class, 
+            $article,
+            [
+                'action' => $this->generateUrl('articles_add'),
+                'method' => 'POST',
+            ]
+        );
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid() && $article->getAuteur() != null) {
+            $article = $form->getData();
+            $date = new \DateTime();
+            $article->setDateCreation($date);
+            $article->setDateModification($date);
+            $article->setDatePublication($date);
+            $entityManager = $this->doctrine->getManager();
+            $entityManager->persist($article);
+            $entityManager->flush();
+            return $this->redirectToRoute('articles_add');
+        }
+        return $this->render('articles/add.html.twig', [
+            'form' => $form->createView(),
         ]);
-    }
+    } 
     
-    #[Route('/article/edit/{id}', name: 'app_articles')]
-    public function editArticle($id)
+    #[Route('/articles', name: 'articles')]
+    public function getArticles(): Response
     {
-        return $this->render('articles/editArticle.html.twig', [
-            'id' => $id,
-        ]);
-    }
-    
-    public function deleteArticle($id)
-    {
-        return $this->render('articles/deleteArticle.html.twig', [
-            'id' => $id,
+        $articles = $this->doctrine
+            ->getRepository(Articles::class)
+            ->findBy([], ['date_publication' => 'DESC']);
+        return $this->render('articles/index.html.twig', [
+            'articles' => $articles,
         ]);
     }
     

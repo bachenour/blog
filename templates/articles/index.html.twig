@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1> Liste des articles </h1>
+    {% if articles is not empty %}
+        {% for article in articles %}
+            <div class="container">
+                <h2>{{ article.titre }}</h2>
+                <h3>Résumé</h3>
+                <p>{{ article.resume }}</p>
+            </div>
+
+        {% endfor %}
+    {% else %}
+        <li>Aucun article trouvé</li>
+    {% endif %}
+{% endblock %}
