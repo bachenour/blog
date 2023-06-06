@@ -49,7 +49,7 @@ class ContactController extends AbstractController
             return $this->redirectToRoute('articles');
         }
 
-        return $this->render('contact/index.html.twig', [
+        return $this->render('auteurs', [
             'form' => $form->createView()
         ]);
     }
