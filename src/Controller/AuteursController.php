@@ -49,7 +49,7 @@ class AuteursController extends AbstractController
     
 
     //page d'accueil
-    #[Route('/auteurs', name: 'auteurs')]
+    #[Route('/', name: 'auteurs')]
     public function getAuteurs()
     {
         $auteurs = $this->doctrine->getRepository(Auteurs::class)->findAll();
