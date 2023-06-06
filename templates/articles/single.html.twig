@@ -19,6 +19,7 @@
             <p>modifié le : {{ article.dateModification }}</p>
             <p>auteur : {{ article.auteur.nom }}</p>
             <button><a href="{{ path('article_edit', {'id': article.id}) }}">Modifier</a></button>
+            <button><a href="{{ path('contact', {'id': article.auteur.id}) }}">Contacter l'auteur</a></button>
 
         <p>--------------------------------------------------------------------------------------------------------------------</p>
     </div>
