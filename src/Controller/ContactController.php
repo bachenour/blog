@@ -28,15 +28,18 @@ class ContactController extends AbstractController
             $message = (new Email)
                 ->from($contactFormData['email'])
                 ->to('bache.nour2@gmail.com')
-                ->subject('Demande de contact : Nouveau message depuis le formulaire de contact')
+                ->subject('Demande de contact : Nouveau message de contact')
                 ->text('Sender : '.$contactFormData['email'].\PHP_EOL.
-                    $contactFormData['Message'],
-                    'text/plain');
+                    $contactFormData['message'],
+                    'text/plain')
+                    ->html('<h1>Nouveau message de contact</h1>')
+                    ->html('<p>Message de : '.$contactFormData['email'].'</p>')
+                    ->html('<p>'.$contactFormData['message'].'</p>');
             $mailer->send($message);
 
-            $this->addFlash('success', 'Vore message a été envoyé');
+            $this->addFlash('success', 'message a été envoyé');
 
-            return $this->redirectToRoute('contact');
+            return $this->redirectToRoute('articles');
         }
 
         return $this->render('contact/index.html.twig', [
