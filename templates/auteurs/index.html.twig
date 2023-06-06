@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+    <button><a href="{{ path('articles') }}">Voir les articles</a></button>
     <h1> Liste des auteurs </h1>
     {% if auteurs is not empty %}
             {% for auteur in auteurs %}

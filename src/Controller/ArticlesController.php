@@ -55,7 +55,7 @@ class ArticlesController extends AbstractController
         ]);
     } 
     
-    #[Route('/articles', name: 'articles')]
+    #[Route('/', name: 'articles')]
     public function getArticles(): Response
     {
         $articles = $this->doctrine
